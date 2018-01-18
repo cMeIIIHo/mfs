@@ -8,3 +8,10 @@ def show_unread_messages(request):
     context = {'unread_messages': unread_messages}
     return render(request, template, context)
 
+
+def get_new_messages(request):
+    pass
+
+
+def mark_read(request):
+    pass
