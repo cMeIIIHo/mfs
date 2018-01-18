@@ -5,9 +5,9 @@
     <title>Messages From Space</title>
 </head>
 <body>
-{% for new_message in new_messages %}
+{% for message in unread_messages %}
 <div>
-    {{ new_message.text }}
+    {{ message.text }}
 </div>
 {% endfor %}
 </body>

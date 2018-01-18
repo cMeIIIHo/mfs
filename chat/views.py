@@ -2,8 +2,9 @@ from django.shortcuts import render
 from chat.models import *
 
 
-def show_new_messages(request):
-    new_messages = MessageFromSpace.objects.filter(has_been_read=False)
-    template = 'chat/show_new_messages.html'
-    context = {'new_messages': new_messages}
+def show_unread_messages(request):
+    unread_messages = MessageFromSpace.objects.filter(has_been_read=False)
+    template = 'chat/show_unread_messages.html'
+    context = {'unread_messages': unread_messages}
     return render(request, template, context)
+
