@@ -5,6 +5,10 @@
     <title>Messages From Space</title>
 </head>
 <body>
-
+{% for message in messages %}
+<div>
+    {{ message.text }}
+</div>
+{% endfor %}
 </body>
 </html>
