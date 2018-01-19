@@ -13,7 +13,7 @@
 <div id="app1" data-ajax-get_new_messages="{% url 'chat:get_new_messages' %}">
     <message
         v-for="message in messages"
-        v-bind:msg="message"
+        v-bind:message="message"
         v-bind:key="message.id">
     </message>
 </div>

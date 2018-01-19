@@ -4,7 +4,6 @@ from django.core import serializers
 from django.http import JsonResponse
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
 
 
 def show_unread_messages(request):
@@ -18,19 +17,18 @@ def show_unread_messages(request):
 def get_new_messages(request):
     try:
         last_message_id = int(request.GET['last_id'])
-    except Exception:  # TODO point exceptions
+    except (KeyError, ValueError):
         pass
     else:
         new_messages = MessageFromSpace.get_new_messages(last_message_id)
-        if new_messages.exists():  #TODO empty messages should be returned, not 404
-            return HttpResponse(serializers.serialize('json', new_messages), content_type='text/json')  #TODO pass list of dicts data
+        return JsonResponse(list(new_messages.values('id', 'text')), safe=False)
     raise Http404
 
 
 def mark_read(request):
     try:
         message_id = int(request.GET['message_id'])
-    except Exception:
+    except (KeyError, ValueError):
         pass
     else:
         try:

@@ -1,17 +1,14 @@
 $( document ).ready(function() {
 
     Vue.component('message', {
-        props: ['msg'],
-        template: '<div>{{ msg.fields.text }}</div>'
+        props: ['message'],
+        template: '<div>{{ message.text }}</div>'
     });
 
     var app1 = new Vue({
       el: '#app1',
-      data: {messages: [
-                          { id: 0, pk: 'Vegetables' },
-                          { id: 1, pk: 'Cheese' },
-                          { id: 2, pk: 'Whatever else humans are supposed to eat' }
-                        ],
+      data: {
+        messages: []
       },
       methods: {
         update_messages: function() {
@@ -29,11 +26,6 @@ $( document ).ready(function() {
     });
 
     app1.update_messages();
-
-
-
-
-
 
 });
 
