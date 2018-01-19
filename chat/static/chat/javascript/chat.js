@@ -16,7 +16,7 @@ $( document ).ready(function() {
                 url: $('#app1').attr('data-ajax-get_new_messages'),
                 type: 'get',
                 dataType: 'json',
-                data: {'last_id': 1},
+                data: {'last_id': 0},
                 success: function(data) {
                     app1.messages = data
                 }
