@@ -12,4 +12,4 @@ class MessageFromSpace(models.Model):
 
     @classmethod
     def get_new_messages(cls, last_id):
-        return MessageFromSpace.objects.filter(pk__gte=last_id)
+        return MessageFromSpace.objects.filter(pk__gt=last_id, has_been_read=False)
