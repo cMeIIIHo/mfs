@@ -10,6 +10,7 @@ def show_unread_messages(request):
     unread_messages = MessageFromSpace.objects.filter(has_been_read=False)
     template = 'chat/show_unread_messages.html'
     context = {'unread_messages': unread_messages}
+    print(serializers.serialize('json', unread_messages))
     return render(request, template, context)
 
 
@@ -21,7 +22,7 @@ def get_new_messages(request):
     else:
         new_messages = MessageFromSpace.get_new_messages(last_message_id)
         if new_messages.exists():
-            return JsonResponse(serializers.serialize('json', new_messages))
+            return JsonResponse(serializers.serialize('json', new_messages), safe=False)
     raise Http404
 
 

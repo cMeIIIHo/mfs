@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static from staticfiles %}
     <meta charset="UTF-8">
     <title>Messages From Space</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'chat/javascript/chat.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 <body>
-{% for message in unread_messages %}
-<div>
-    {{ message.text }}
+
+<div id="app1" data-ajax-get_new_messages="{% url 'chat:get_new_messages' %}">
+    <message
+        v-for="message in messages"
+        v-bind:msg="message"
+        v-bind:key="message.id">
+    </message>
 </div>
-{% endfor %}
+
 </body>
 </html>
