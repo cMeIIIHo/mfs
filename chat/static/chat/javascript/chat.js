@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   Vue.component('message', {
     props: ['message'],
-    template: '<div>{{ message.text }}</div>'
+    template: '<div>{{ message.text }}, {{ message.id }}</div>'
   });
 
   var app1 = new Vue({
@@ -22,14 +22,19 @@ $(document).ready(function() {
             'last_id': self.last_id,
           },
           success: function(new_messages) {
-            self.messages.push.apply(self.messages, new_messages);
+            if (!$.isEmptyObject(new_messages)) {
+              for (var index in new_messages) {
+                self.messages.unshift(new_messages[index]);
+              };
+              self.last_id = new_messages[new_messages.length - 1]['id'];
+            }
           }
         })
       },
     },
     mounted: function() {
       this.update_messages();
-      setInterval(this.update_messages, 5000);
+      setInterval(this.update_messages, 10000);
     },
   });
 
