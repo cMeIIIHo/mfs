@@ -1,17 +1,13 @@
 from django.shortcuts import render
 from chat.models import *
-from django.core import serializers
 from django.http import JsonResponse
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 
 
 def show_unread_messages(request):
-    unread_messages = MessageFromSpace.objects.filter(has_been_read=False)
     template = 'chat/show_unread_messages.html'
-    context = {'unread_messages': unread_messages}
-    print(serializers.serialize('json', unread_messages))
-    return render(request, template, context)
+    return render(request, template)
 
 
 def get_new_messages(request):
@@ -21,7 +17,7 @@ def get_new_messages(request):
         pass
     else:
         new_messages = MessageFromSpace.get_new_messages(last_message_id)
-        return JsonResponse(list(new_messages.values('id', 'text')), safe=False)
+        return JsonResponse(list(new_messages.values('id', 'text', 'date')), safe=False)
     raise Http404
 
 
