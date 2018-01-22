@@ -17,7 +17,7 @@ def get_new_messages(request):
         raise Http404('invalid parameter or empty')
     else:
         new_messages = MessageFromSpace.get_new_messages(last_message_id)
-        new_messages_data = list(new_messages.values('id', 'text', 'date'))
+        new_messages_data = list(new_messages.values('id', 'text'))
         return JsonResponse(new_messages_data, safe=False)
 
 

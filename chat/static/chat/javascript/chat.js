@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   Vue.component('message', {
     props: ['message'],
-    template: '<div>{{ message.date }}, {{ message.text }}</div>'
+    template: '<div>{{ message.text }}</div>'
   });
 
   var app1 = new Vue({
