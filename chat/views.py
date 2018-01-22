@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from chat.models import MessageFromSpace
-from django.http import JsonResponse, Http404, HttpResponse
+from django.http import JsonResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 
