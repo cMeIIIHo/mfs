@@ -1,10 +1,5 @@
 $(document).ready(function() {
 
-  Vue.component('message', {
-    props: ['message'],
-    template: '<div>{{ message.text }}</div>'
-  });
-
   var app1 = new Vue({
     el: '#app1',
     data: {
@@ -38,4 +33,54 @@ $(document).ready(function() {
     },
   });
 
+  Vue.component('message', {
+    props: ['message'],
+    data: function () {
+      return {
+        has_been_read: false
+      }
+    },
+    template: `
+      <div class="card" v-bind:class="{ hidden: has_been_read }">
+        <div class="card-header">
+        {{ timeConverter(message.date) }}
+        </div>
+        <div class="card-body">
+          <p class="card-text">{{ message.text }}</p>
+          <button type="button" class="btn btn-info" v-on:click="read">Read</button>
+        </div>
+      </div>
+    `,
+    methods: {
+      read: function() {
+        var self = this;
+        $.ajax({
+          url: '/api/mark_read',
+          type: 'GET',
+          dataType: 'json',
+          data: {
+            'message_id': self.message['id'],
+          },
+          success: function() {
+            var element = self.$el;
+            $(element).hide('slow');
+          },
+        });
+      },
+    },
+  });
 });
+
+function timeConverter(UNIX_timestamp){
+  var a = new Date(UNIX_timestamp * 1000);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  return time;
+}
+

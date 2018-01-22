@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from chat.models import MessageFromSpace
-from django.http import JsonResponse
-from django.http import Http404
+from django.http import JsonResponse, Http404, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+from datetime import datetime
 
 
 def show_unread_messages(request):
@@ -17,7 +17,11 @@ def get_new_messages(request):
         raise Http404('invalid parameter or empty')
     else:
         new_messages = MessageFromSpace.get_new_messages(last_message_id)
-        new_messages_data = list(new_messages.values('id', 'text'))
+        new_messages_data = list(new_messages.values('id', 'text', 'date'))
+        unix_date = datetime(1970, 1, 1)
+        for new_message_data in new_messages_data:
+            our_date = new_message_data['date'].replace(tzinfo=None)
+            new_message_data['date'] = int((our_date-unix_date).total_seconds())
         return JsonResponse(new_messages_data, safe=False)
 
 
@@ -34,3 +38,4 @@ def mark_message_read(request):
         else:
             message.has_been_read = True
             message.save()
+            return JsonResponse({'request': 'success'})
