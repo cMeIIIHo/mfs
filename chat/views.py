@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from chat.models import *
+from chat.models import MessageFromSpace
 from django.http import JsonResponse
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
@@ -21,7 +21,7 @@ def get_new_messages(request):
     raise Http404
 
 
-def mark_read(request):
+def mark_message_read(request):
     try:
         message_id = int(request.GET['message_id'])
     except (KeyError, ValueError):

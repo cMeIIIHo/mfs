@@ -16,7 +16,7 @@ $(document).ready(function() {
         var self = this;
         $.ajax({
           url: '/api/get_messages',
-          type: 'get',
+          type: 'GET',
           dataType: 'json',
           data: {
             'last_id': self.last_id,
