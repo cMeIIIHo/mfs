@@ -35,13 +35,8 @@ $(document).ready(function() {
 
   Vue.component('message', {
     props: ['message'],
-    data: function () {
-      return {
-        has_been_read: false
-      }
-    },
     template: `
-      <div class="card" v-bind:class="{ hidden: has_been_read }">
+      <div class="card">
         <div class="card-header">
         {{ timeConverter(message.date) }}
         </div>
