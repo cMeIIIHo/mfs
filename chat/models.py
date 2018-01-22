@@ -11,7 +11,7 @@ class MessageFromSpace(models.Model):
     has_been_read = models.BooleanField(default=False)
 
     def __str__(self):
-        return '%s, %s' % (self.text, self.has_been_read)
+        return self.text
 
     @classmethod
     def get_new_messages(cls, last_id):
